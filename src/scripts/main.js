@@ -16,19 +16,28 @@ for (const form of forms) {
   const inputs = form.querySelectorAll('input');
 
   for (const input of inputs) {
-    if (input.type === 'text' || input.type === 'password') {
-      if (!input.id && input.name) {
-        input.id = input.name;
-      }
-
-      const label = document.createElement('label');
-
-      label.classList.add('field-label');
-
-      label.htmlFor = input.id;
-      label.textContent = capitalize(input.name);
-      input.placeholder = capitalize(input.name);
-      input.parentNode.insertBefore(label, input);
+    if (
+      [
+        'submit',
+        'button',
+        'reset',
+        'hidden',
+        'image',
+        'file',
+        'checkbox',
+        'radio',
+      ].includes(input.type)
+    ) {
+      continue;
     }
+
+    const label = document.createElement('label');
+
+    label.classList.add('field-label');
+
+    label.htmlFor = input.id;
+    label.textContent = capitalize(input.name);
+    input.placeholder = capitalize(input.name);
+    input.parentNode.insertBefore(label, input);
   }
 }
